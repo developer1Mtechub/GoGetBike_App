@@ -5,7 +5,8 @@ import { images } from '../../../utils/constants'
 import CustomHeader from '../../../components/CustomHeader'
 import { globalStyel } from '../../globalstyle'
 
-const Identity = ({ navigation }) => {
+const Identity = ({ navigation,route }) => {
+    const {userData} = route.params;
     const [state, setState] = useState({
         checkVerificationType: ""
     })
@@ -14,7 +15,7 @@ const Identity = ({ navigation }) => {
         if (responce == "singpass") {
             Alert.alert("Payment Sdk Will be Integrated")
         } else if (responce == "manual") {
-            navigation.navigate("ManualVerification")
+            navigation.navigate("ManualVerification",{userData:userData})
         }
 
 

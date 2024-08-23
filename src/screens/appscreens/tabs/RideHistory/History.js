@@ -47,23 +47,25 @@ const History = ({ navigation }) => {
   return (
     <View style={globalStyel.tabsContainer}>
       <View style={globalStyel.tabsinnerContainer}>
-    <GlobaltabsHeaderText title={"My Rides"}/>
-      <View style={styles.buttonContainer}>
-        {["Upcoming", "Completed"].map((item, index) => (
-          <Historybuttons
-            key={index}
-            cId={state.selectedIndex}
-            index={index}
-            onPress={_handleStatusPress}
-            buttonTitle={item}
-          />
-        ))}
+        <GlobaltabsHeaderText title={"My Rides"} />
+        <View style={styles.buttonContainer}>
+          {["Upcoming", "Completed"].map((item, index) => (
+            <Historybuttons
+              key={index}
+              cId={state.selectedIndex}
+              index={index}
+              onPress={_handleStatusPress}
+              buttonTitle={item}
+            />
+          ))}
+        </View>
+        <View style={styles.cardContainer}>
+          {state.selectedIndex === 0 ? 
+          <HistoryCard upcoming={true} onPress={(responce) => _handleCardPress(responce)} /> : 
+          <HistoryCard upcoming={false}  onPress={(responce) => _handleCardPress(responce)} />}
+        </View>
       </View>
-      <View style={styles.cardContainer}>
-        {state.selectedIndex === 0 ? <HistoryCard onPress={(responce) => _handleCardPress(responce)} /> :<HistoryCard onPress={(responce) => _handleCardPress(responce)} />}
-      </View>
-      </View>
-     
+
     </View>
   );
 }

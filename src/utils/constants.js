@@ -1,5 +1,7 @@
 export const images = {
     slide1 : require("../assets/slide1.png"),
+    onboarding1 : require("../assets/onboarding1.png"),
+
     bikeback:require("../assets/bikeback.png"),
     bikefront : require("../assets/bikefront.png"),
     bikef : require("../assets/bikef.png"),

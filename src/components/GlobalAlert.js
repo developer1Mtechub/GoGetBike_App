@@ -4,44 +4,8 @@ import Custombutton from './Custombutton'
 import { fonts } from '../utils/fonts'
 import CustomImage from './CustomImage'
 import { images } from '../utils/constants'
-
-// const GlobalAlert = (props) => {
-//     return (
-//         <Modal
-//             transparent={true}
-//             visible={props.isModalvisible}>
-//             <View style={styles.modalContainer}>
-//                 {props.type == "addlocation" ?
-//                     <View style={styles.modalsubContainer}>
-//                         <CustomImage source={images.warning} style={{ height: 70, width: 70, resizeMode: "contain" }} />
-//                         <Text style={styles.titleTxt}>Sorry, We are not Operatiing in this location</Text>
-//                         <Custombutton onPress={() => props.handleModal("gotIt")} title={"I Got It"} customstyle={{ width: '70%', marginVertical: 12 }} />
-//                     </View>
-//                     : props.type == "searchResultScreen" ?
-//                         <View style={styles.modalsubContainer}>
-//                             <CustomImage source={images.warning} style={{ height: 70, width: 70, resizeMode: "contain" }} />
-//                             <Text style={styles.titleTxt}>Are you sure you wanna Book this bike</Text>
-//                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-//                                 <Custombutton onPress={() => props.handleModal("no")} title={"No"}
-//                                     customstyle={{ width: '45%' }} />
-//                                 <Custombutton onPress={() => props.handleModal("yes")} title={"Yes"}
-//                                     customTilestyle={{ color: fonts.PRIMARY_COLOR }}
-//                                     customstyle={styles.yesButton} />
-//                             </View>
-//                         </View> :
-//                             props.type == "rideRate" ?
-//                             <View style={styles.modalsubContainer}>
-//                                 <CustomImage source={images.warning} style={{ height: 70, width: 70, resizeMode: "contain" }} />
-//                                 <Text style={styles.titleTxt}>{`Review Submited \nTo Admin`}</Text>
-//                         </View> :
-//                         null
-//                 }
-//             </View>
-
-//         </Modal>
-//     )
-// }
-
+import Customtitle from './Customtitle'
+import Customdescription from './Customdescription'
 const GlobalAlert = (props) => {
     const renderModalContent = () => {
         switch (props.type) {
@@ -65,25 +29,43 @@ const GlobalAlert = (props) => {
                         </View>
                     </View>
                 );
-                case "uploadedSuccessfuly":
-                    return (
-                        <View style={styles.modalsubContainer}>
-                            <CustomImage source={images.warning} style={{ height: 70, width: 70, resizeMode: "contain" }} />
-                            <Text style={styles.titleTxt}>Manual Registration will be verified within 3-5 working days.</Text>
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                {/* <Custombutton onPress={() => props.handleModal("no")} title={"No"} customstyle={{ width: '45%' }} />
+            case "uploadedSuccessfuly":
+                return (
+                    <View style={styles.modalsubContainer}>
+                        <CustomImage source={images.warning} style={{ height: 70, width: 70, resizeMode: "contain" }} />
+                        <Text style={styles.titleTxt}>Manual Registration will be verified within 3-5 working days.</Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            {/* <Custombutton onPress={() => props.handleModal("no")} title={"No"} customstyle={{ width: '45%' }} />
                                 <Custombutton onPress={() => props.handleModal("yes")} title={"Yes"} customTilestyle={{ color: fonts.PRIMARY_COLOR }} customstyle={styles.yesButton} /> */}
-                            </View>
                         </View>
-                    );
-
-                
-
+                    </View>
+                );
             case "rideRate":
                 return (
                     <View style={styles.modalsubContainer}>
                         <CustomImage source={images.warning} style={{ height: 70, width: 70, resizeMode: "contain" }} />
                         <Text style={styles.titleTxt}>{`Review Submitted \nTo Admin`}</Text>
+                    </View>
+                );
+            case "lowBalance":
+                return (
+                    <View style={styles.modalsubContainer}>
+                        <CustomImage source={images.warning} style={{ height: 70, width: 70, resizeMode: "contain" }} />
+                        <Customtitle title={"Security Deposit"} />
+                        <Customdescription 
+                        customStyle={{
+                            fontFamily:fonts.MONTESERAT_SEMIBOLD,
+                            paddingVertical:4
+                        }}
+                        title={"An amount of 20$ as a \n  security is required"} />
+                        <Custombutton
+                        onPress={()=>props.onPress("balance")}
+                        title={"Continue"} customstyle={{
+                            height: 40,
+                            width: '50%',
+                            marginTop:10
+
+                        }} />
                     </View>
                 );
 

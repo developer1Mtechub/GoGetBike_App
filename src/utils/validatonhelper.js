@@ -13,9 +13,26 @@ const completeProfileValidationSchema = Yup.object().shape({
     email: Yup.string()
         .email('Please enter a valid email*')
         .required('Email address is required*'),
-        dob:Yup.string()
-        .email('Please enter your date of borth')
+    dob: Yup.string()
         .required('Date of birth is required*'),
+    address: Yup.string()
+        .required('Address is required*')
+        .matches(/^[a-zA-Z\s]+$/, 'Full name can only contain letters and spaces*'),
+});
+
+const tellUsmorescreenValidation = Yup.object().shape({
+    fullNameNric: Yup.string()
+        .required('Full name as per NRIC is required*')
+        .matches(/^[a-zA-Z\s]+$/, 'Full name can only contain letters and spaces*'),
+    fullAddress: Yup.string()
+        .required('Address is required*')
+        .matches(/^[a-zA-Z\s]+$/, 'Full name can only contain letters and spaces*'),
+    nricNo: Yup.string()
+        .required('NRIC number is required*'),
+    postalCode: Yup.string()
+        .required('Postal code is required*'),
+    frontPic: Yup.string().required('Front ID Photo is required*'), // Assuming photo is a URL
+    backPic: Yup.string().required('Back ID Photo is required*')
 });
 const SignUpValidationSchema = Yup.object().shape({
     email: Yup.string().email('Please Enter a valid email').required('Email Address is required'),
@@ -64,6 +81,7 @@ export {
     forgetPasswordValidationSchema,
     resetPasswordValidationSchema,
     changePasswordValidationSchema,
-    completeProfileValidationSchema
+    completeProfileValidationSchema,
+    tellUsmorescreenValidation
 
 }

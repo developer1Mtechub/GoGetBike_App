@@ -1,13 +1,17 @@
 import React from 'react'
 import { Dimensions, Image } from 'react-native'
 import { images } from './constants'
+
+
+
 export const onboardingArray = [
     {
         backgroundColor: '#fff',
-        image: <Image source={images.slide1} style={{
-            height: 450,
-            alignSelf: 'flex-start',
-            width: 680, resizeMode: 'contain'
+        image: <Image source={images.onboarding1} style={{
+            height:250,
+            alignSelf: 'flex-end',
+            width: 300,
+            resizeMode: 'contain'
         }} />,
         title: 'Welcome to RideEasy',
         subtitle: 'Discover the easiest way to rent a bike and explore the city on your terms.',
@@ -15,7 +19,7 @@ export const onboardingArray = [
     {
         backgroundColor: '#fff',
         image: <Image source={images.bikeb} style={{
-            height: 480,
+            height: 250,
             alignSelf: "flex-end",
             // left: '6%',
             width: 600,
@@ -29,7 +33,7 @@ export const onboardingArray = [
         image: <Image source={images.bikef} style={{
             alignSelf: "flex-end",
             right: "21%",
-            height: 480,
+            height: 150,
             width: 620,
             resizeMode: 'contain'
         }} />,
@@ -114,29 +118,29 @@ export const profileData = [
     {
         id: 1,
         title: 'Edit Profile',
-        icon:images.edit
+        icon: images.edit
 
     },
     {
         id: 2,
         title: 'Manage Addresses',
-        icon:images.address
+        icon: images.address
 
     },
     {
         id: 3,
         title: 'Chat with admin',
-        icon:images.chat
+        icon: images.chat
     },
     {
         id: 4,
         title: 'Manage Cards',
-        icon:images.card
+        icon: images.card
     },
     {
         id: 5,
         title: 'Log Out',
-        icon:images.logout
+        icon: images.logout
     },
 
 

@@ -9,8 +9,8 @@ import CustomCard from '../../../components/CustomCard'
 const Letstart = ({ navigation }) => {
   const _handlePress = (resp) => {
     if (resp == "Create") {
-      // navigation.navigate("Registration")
-      navigation.navigate("Tabs")
+      navigation.navigate("Registration")
+      // navigation.navigate("Tabs")
     }else{
       navigation.navigate("Login")
     }

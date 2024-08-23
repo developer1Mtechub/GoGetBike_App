@@ -1,60 +1,94 @@
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {View } from 'react-native'
 import React, { useState } from 'react'
 import { globalStyel } from '../../globalstyle'
 import CustomHeader from '../../../components/CustomHeader'
 import CustomCard from '../../../components/CustomCard'
-import AntDesign from "react-native-vector-icons/AntDesign"
 import Spacer from '../../../components/Spacer'
 import Custombutton from '../../../components/Custombutton'
 import { _globalImagePicker } from '../../../components/ImagePicker'
-import CustomImage from '../../../components/CustomImage'
-import Entypo from 'react-native-vector-icons/Entypo'
 import GlobalAlert from '../../../components/GlobalAlert'
-const UploaddriveId = ({ navigation }) => {
+import ImageUpload from './component/Imageupload'
+import { userRegister } from '../../../utils/apis'
+const UploaddriveId = ({ navigation, route }) => {
+    const { userData } = route.params;
     const [state, setState] = useState({
-        driverId: '',
+        driverIdFront: '',
         modalVisble: false,
-        loading: false
+        loading: false,
+        driverIdBack: '',
+        imageType: ''
 
     })
     const _handleOnpress = () => {
-        setState((prevState) => ({
-            ...prevState,
-            modalVisble: true
-        }))
+        const userResponce = {
+            phone: "+923135959779",
+            email: userData.email,
+            full_name: userData.fullName,
+            full_address: userData.fullAddress,
+            dob: "22-01-2000",
+            verification_method: "manual",
+            location: {
+                latitude: "33.626057",
+                longitude: "73.071442"
+            },
+            profile_pic: {
+                public_id: "sample",
+                url: userData.userImage
+            },
+            nric_no: userData.nricNo,
+            front_id_pic: {
+                public_id: "sample", 
+                url: userData.frontPic 
+            },
+            back_id_pic: {
+                public_id: "sample",
+                url: userData.backPic
+            },
+            front_id_license: {
+                public_id: "sample",
+                url: state.driverIdFront
+            },
+            back_id_license: {
+                public_id: "sample",
+                url: state.driverIdBack
+            }
+        };
+        userRegister(userResponce).then((responce) => {
+            console.log("Check Api Responce", responce)
+        }).catch((error) => {
+            console.log("Get Error", error)
+        })
+        // setState((prevState) => ({
+        //     ...prevState,
+        //     modalVisble: true
+        // }))
 
-        setTimeout(() => {
-            setState((prevState) => ({
-                ...prevState,
-                modalVisble: false
-            }))
-            _redirectingtoHome();
-        }, 1000);
+        // setTimeout(() => {
+        //     setState((prevState) => ({
+        //         ...prevState,
+        //         modalVisble: false
+        //     }))
+        //     _redirectingtoHome();
+        // }, 2000);
     }
     const _redirectingtoHome = () => {
         navigation.navigate("Tabs")
     }
-    const handleImageSelected = (image) => {
+    const handleImagePicker = (type, side) => {
+        _globalImagePicker(type, (image) => {
+            if (side === 'front') {
+                setState(prevState => ({ ...prevState, driverIdFront: image.path }));
+            } else if (side === 'back') {
+                setState(prevState => ({ ...prevState, driverIdBack: image.path }));
+            }
+        });
+    };
+    const handleClearImage = (position) => {
         setState(prevState => ({
             ...prevState,
-            driverId: image.path,
-        }))
-    }
-    const handleImagePicker = (type) => {
-        _globalImagePicker(type, handleImageSelected);
+            [position]: '',
+        }));
     };
-
-    // const handleModalres = (res) => {
-    //     if (res == "Yes") {
-    //         _redirectingtoHome();
-    //     }
-    //     else {
-    //         setState(prevState => ({
-    //             ...prevState,
-    //             modalVisble: false,
-    //         }))
-    //     }
-    // }
 
     return (
         <View style={globalStyel.mainCOntainer}>
@@ -74,31 +108,24 @@ const UploaddriveId = ({ navigation }) => {
                         titleSubtitle={true}
 
                     />
-                    <Spacer space={20} />
+                    <Spacer space={10} />
                     <View>
-                        {state.driverId ? <View style={{
-                            height: 200,
-                            borderRadius: 10,
-                            width: '100%',
-                            borderWidth: 1
-                        }}>
-                            <CustomImage source={state.driverId} style={{ height: 200, width: "100%", resizeMode: 'cover', borderRadius: 10 }} />
-                            <TouchableOpacity onPress={() => {
-                                setState((prevState => ({
-                                    ...prevState,
-                                    driverId: ""
-                                })))
-                            }} style={{ position: 'absolute', alignSelf: 'flex-end', }}>
-                                <Entypo name={"circle-with-cross"} size={32} color={"red"} />
-                            </TouchableOpacity>
-                        </View>
-                            : <TouchableOpacity onPress={() => handleImagePicker("camera")} style={styles.uploadCard}>
-                                <AntDesign name={"camerao"} size={24} color={"#000"} />
-                                <Text style={globalStyel.globalTxt}>Upload Id</Text>
-                            </TouchableOpacity>}
+                        <ImageUpload
+                            imageUri={state.driverIdFront}
+                            onUploadPress={() => handleImagePicker('camera', 'front')}
+                            onClearPress={() => handleClearImage('driverIdFront')}
+                            uploadTitle="Upload Id Front"
+                        />
+                        <Spacer space={10} />
+                        <ImageUpload
+                            imageUri={state.driverIdBack}
+                            onUploadPress={() => handleImagePicker('camera', 'back')}
+                            onClearPress={() => handleClearImage('driverIdBack')}
+                            uploadTitle="Upload Id Back"
+                        />
                     </View>
                     <Spacer space={20} />
-                    {state.driverId != "" && <Custombutton title={"Submit"} onPress={() => _handleOnpress()} />}
+                    {state.driverIdFront != "" && state.driverIdBack != "" && <Custombutton title={"Submit"} onPress={() => _handleOnpress()} />}
                     <GlobalAlert
                         isModalvisible={state.modalVisble}
                         type={"uploadedSuccessfuly"}
@@ -116,12 +143,3 @@ const UploaddriveId = ({ navigation }) => {
 }
 
 export default UploaddriveId
-
-const styles = StyleSheet.create({
-    uploadCard: {
-        height: 100, backgroundColor: '#fff',
-        elevation: 2,
-        borderRadius: 4,
-        alignItems: 'center', justifyContent: 'center'
-    }
-})

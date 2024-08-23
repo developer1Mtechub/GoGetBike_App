@@ -2,12 +2,12 @@ import React from 'react';
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { fonts } from '../utils/fonts';
-const CameraButton = ({ onPress, title,customStyle }) => {
+const CameraButton = ({ onPress, title,customStyle,customtitleStyle }) => {
     return (
         <TouchableOpacity activeOpacity={1} onPress={onPress} style={styles.button}>
             <View style={[styles.container,{...customStyle}]}>
                 <AntDesign name={"camerao"} size={32} color={"#000"} />
-                <Text style={styles.text}>{title}</Text>
+                <Text style={[styles.text,{...customtitleStyle}]}>{title}</Text>
             </View>
         </TouchableOpacity>
     );
