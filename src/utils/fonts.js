@@ -12,6 +12,7 @@ export const fonts = {
     descriptionTxtColor:'#727272',
     BLACK:"#000",
     HEADER_BG:"#C669FF",
-    PINK:"#E0AFFF"
+    PINK:"#E0AFFF",
+    LiGHTGREY:'lightgrey'
 
 }

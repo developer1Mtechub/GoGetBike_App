@@ -2,37 +2,53 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { fonts } from '../../../../../utils/fonts'
 import CheckBox from './CheckBox'
+import Spacer from '../../../../../components/Spacer'
 
-const HistoryCard = ({ onPress, wallet }) => {
+const HistoryCard = ({ onPress, wallet, upcoming }) => {
     return (
         <>
-
             {wallet ?
                 <View style={[styles.bookingCard, { margin: 4 }]}>
                     <View style={styles.rowViews}>
                         <Text style={styles.txt}>01 may 2024</Text>
                         <View style={styles.addwalletButton}>
-                            <Text style={[styles.txt, { color: '#fff',fontSize:12 }]}>Added to wallet</Text>
+                            <Text style={[styles.txt, { color: '#fff', fontSize: 12 }]}>Added to wallet</Text>
                         </View>
                     </View>
                     <View style={[styles.rowViews, { marginTop: 6 }]}>
                         <Text style={styles.txt}>$ 08</Text>
                     </View>
-
-                </View> : <View style={styles.bookingCard}>
-                    <View style={styles.rowViews}>
-                        <Text style={styles.txt}>#355678</Text>
-                        <Text style={styles.txt}>08$</Text>
-                    </View>
-                    <View style={[styles.rowViews, { marginTop: 6 }]}>
-                        <Text style={styles.timedatetxt}>01 may 2024, 04:00pm-06:00pm</Text>
-                        <View style={{ top: 15 }}>
-                            <CheckBox onPress={() => onPress("card1")} />
+                </View> :
+                <>
+                    <View style={styles.bookingCard}>
+                        <View style={styles.rowViews}>
+                            <Text style={styles.txt}>#355678</Text>
+                            <Text style={styles.txt}>08$</Text>
+                        </View>
+                        <View style={[styles.rowViews, { marginTop: 6 }]}>
+                            <Text style={styles.timedatetxt}>01 may 2024, 04:00pm-06:00pm</Text>
+                            <View style={{ top: 15 }}>
+                                <CheckBox onPress={() => onPress("card1")} />
+                            </View>
                         </View>
 
                     </View>
+                    <Spacer space={20} />
+                    {upcoming && <View style={styles.bookingCard}>
+                        <View style={styles.rowViews}>
+                            <Text style={styles.txt}>#375678</Text>
+                            <Text style={styles.txt}>05$</Text>
+                        </View>
+                        <View style={[styles.rowViews, { marginTop: 6 }]}>
+                            <Text style={styles.timedatetxt}>01 may 2024, 04:00pm-06:00pm</Text>
+                            <View style={{ top: 15 }}>
+                                <CheckBox onPress={() => onPress("card1")} />
+                            </View>
+                        </View>
 
-                </View>
+                    </View>}
+                </>
+
             }
         </>
 
@@ -56,7 +72,7 @@ const styles = StyleSheet.create({
     addwalletButton: {
         backgroundColor: fonts.PRIMARY_COLOR,
         borderRadius: 20,
-        padding:4
+        padding: 4
 
     },
     rowViews: {

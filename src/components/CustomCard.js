@@ -18,11 +18,13 @@ const CustomCard = (props) => {
                             <FieldCard
                                 completeProfile={props.completeProfile}
                                 onPress={(res) => props.onPress(res)}
+                                onPressDB={(res)=>props.onPressDB(res)}
                                 tellmore={props.tellmore}
                                 fronPhoto={props.fronPhoto}
                                 backPhoto={props.backPhoto}
                                 uploadDrive={props.uploadDrive}
                                 buttonTitle={props.titleSubtitle ? "Submit" : ""}
+                                loading={props.loading}
                             />
                         </View>
 

@@ -5,29 +5,87 @@ import CustomHeader from '../../../components/CustomHeader'
 import { globalStyel } from '../../globalstyle'
 import { images } from '../../../utils/constants'
 import { _globalImagePicker, _imagePicker } from '../../../components/ImagePicker'
+import { uploadImageToCloudinary } from '../../../utils/apis'
 
-const Takeselfie = ({ navigation }) => {
+const Takeselfie = ({ navigation, route }) => {
+    const { userData } = route.params;
     const [state, setState] = useState({
         selfieState: false,
-        userImage: ''
+        userImage: '',
+        loading: false
     })
 
     const _handleOnpress = (responce) => {
+
+        setState(prevState => ({
+            ...prevState,
+            loading: true
+        }))
         if (responce == "selfie") {
             handleImagePicker("camera")
         } else {
-            navigation.navigate("TellusMore")
+            setTimeout(() => {
+                setState(prevState => ({
+                    ...prevState,
+                    loading: false
+                }))
+                const userResponse = {
+                    fullName: userData.fullName,
+                    email: userData.email,
+                    address: userData.address,
+                    dob: userData.dob,
+                    userImage: state.userImage
+                };
+                navigation.navigate("TellusMore", {
+                    userData: userResponse
+                });
+            }, 1000);
+
+
         }
     }
 
-    const handleImageSelected = (image) => {
+    // const handleImageSelected = (image) => {
+    //     if (image) {
+    //         setState(prevState => ({
+    //             ...prevState,
+    //             selfieState: true,
+    //             userImage: image.path,
+    //             userData: {
+    //                 ...userData,
+    //                 userImage: image.path
+    //             }
+    //         }))
+
+    //     }
+    // };
+    const handleImageSelected = async (image) => {
+
         if (image) {
             setState(prevState => ({
                 ...prevState,
                 selfieState: true,
-                userImage: image.path
-            }))
-
+                userImage: image.path,
+                loading: true,
+            }));
+            try {
+                const uploadedImageUrl = await uploadImageToCloudinary(image.path);
+                if (uploadedImageUrl) {
+                    setState(prevState => ({
+                        ...prevState,
+                        userImage: uploadedImageUrl,
+                        loading: false,
+                    }));
+                    Alert.alert("Image uploaded!", `Image URL: ${uploadedImageUrl}`);
+                }
+            } catch (error) {
+                console.log('Error uploading image:', error.response);
+                Alert.alert("Error", "Failed to upload image.");
+                setState(prevState => ({
+                    ...prevState,
+                    loading: false,
+                }));
+            }
         }
     };
 
@@ -51,6 +109,7 @@ const Takeselfie = ({ navigation }) => {
                     imagePath={state.userImage}
                     onPress={(type) => _handleOnpress(type)}
                     card={true}
+                    loading={state.loading}
                 />
             </View>
 

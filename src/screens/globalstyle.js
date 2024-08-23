@@ -8,10 +8,21 @@ export const globalStyel = StyleSheet.create({
         backgroundColor:'#fff',
         justifyContent: 'center'
     },
+    errorTxt:{
+        color: 'red',
+        top: 4,
+        fontSize:12,
+        textAlign: 'center'
+    },
+    container:{ flex: 1, backgroundColor: '#fff' },
     mainCOntainer:{flex:1,backgroundColor:"#fff"},
     tabsContainer:{
         flex:1,
         backgroundColor:'#fff'
+    },
+    centerCOntent:{
+justifyContent:'center',
+alignItems:'center'
     },
     tabsinnerContainer:{
        padding:12
@@ -28,9 +39,11 @@ export const globalStyel = StyleSheet.create({
     searchbutton: {
         position: 'absolute',
         bottom: 0,
-        width: '50%',
+        width: '100%',
         alignSelf: 'center',
-        paddingBottom: 20
+        borderBottomWidth:0.5,
+        borderBottomColor:fonts.LiGHTGREY,
+        // paddingBottom: 20
       },
       bikescontainerStyle: {
         flexDirection: 'row',

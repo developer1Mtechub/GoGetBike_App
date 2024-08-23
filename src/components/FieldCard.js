@@ -88,18 +88,25 @@ const CompleteProfileForm = (props) => {
                                 autoCapitalize="none"
                                 keyboardType="number-pad"
                             />
+                            <InputField
+                                label="Postal code."
+                                onChangeText={(text) => handleChange('dob')(text)}
+                                value={values.dob}
+                                autoCapitalize="none"
+                                keyboardType="number-pad"
+                            />
                             <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
                                 {props.backPhoto ?
                                     <>
                                         <View>
                                             <CustomImage source={props.backPhoto} style={{ height: 90, width: 120, borderRadius: 20 }} />
-                                            <TouchableOpacity onPress={()=>props.onPress("clearBackphoto")}  style={styles.crosView}>
-                                            <Entypo name={"cross"} size={18} color={"#fff"}/>
+                                            <TouchableOpacity onPress={() => props.onPress("clearBackphoto")} style={styles.crosView}>
+                                                <Entypo name={"cross"} size={18} color={"#fff"} />
                                             </TouchableOpacity>
                                         </View>
 
                                     </>
-                                    : 
+                                    :
                                     <CameraButton
                                         customStyle={{
                                             backgroundColor: '#fff',
@@ -107,14 +114,18 @@ const CompleteProfileForm = (props) => {
                                             margin: 4,
                                             padding: 10, borderRadius: 10
                                         }}
+                                        customtitleStyle={{
+                                            fontSize: 13
+                                        }}
+
                                         onPress={() => props.onPress("frontPic")}
                                         title={"Front ID Photo"}
                                     />}
                                 {props.fronPhoto ?
                                     <View>
                                         <CustomImage source={props.fronPhoto} style={{ height: 90, width: 120, marginLeft: 10, borderRadius: 20 }} />
-                                        <TouchableOpacity onPress={()=>props.onPress("clearFrontphoto")} style={styles.crosView}>
-                                        <Entypo name={"cross"} size={18} color={"#fff"}/>
+                                        <TouchableOpacity onPress={() => props.onPress("clearFrontphoto")} style={styles.crosView}>
+                                            <Entypo name={"cross"} size={18} color={"#fff"} />
                                         </TouchableOpacity>
                                     </View>
 
@@ -124,6 +135,9 @@ const CompleteProfileForm = (props) => {
                                             elevation: 2,
                                             margin: 4,
                                             padding: 10, borderRadius: 10
+                                        }}
+                                        customtitleStyle={{
+                                            fontSize: 13
                                         }}
                                         onPress={() => props.onPress("backPic")}
                                         title={"Back ID Photo"}
@@ -161,7 +175,9 @@ const CompleteProfileForm = (props) => {
                             <InputField
                                 label="Date of Birth"
                                 onChangeText={(text) => handleChange('dob')(text)}
+                                onFocus={props.onPressDB}
                                 value={values.dob}
+                                editable={true}
                                 autoCapitalize="none"
                                 keyboardType="number-pad"
                             />
@@ -240,6 +256,7 @@ const SelfieSection = (props) => {
                         <Commontitle title={"change"} customStyle={{ fontSize: 14, textAlign: 'center' }} />
                     </TouchableOpacity>
                     <Custombutton
+                        loading={props.loading}
                         onPress={() => props.onPress("selfiedone")}
                         title={"Continue"} customstyle={{
                             width: '70%',
@@ -341,12 +358,12 @@ const FileCard = (props) => {
                                 />
                             </View>
                             <Custombutton
-                               loading={props.loading}
+                                loading={props.loading}
                                 onPress={() => props.onPress(props.codeScreen ? "verify" : props.completeProfile ? "complete" : "sendcode")}
                                 title={"Send Code"} customstyle={{
                                     marginTop: 10,
-                                    width:props.registration ? "70%":'100%',
-                                    alignSelf:'center'
+                                    width: props.registration ? "70%" : '100%',
+                                    alignSelf: 'center'
 
                                 }} />
                         </>
@@ -362,12 +379,12 @@ const styles = StyleSheet.create({
     container: {
         marginBottom: 20,
         backgroundColor: '#fff',
-        elevation:0.5,
-        paddingHorizontal:12,
-        borderWidth:1,
-        borderColor:'lightgrey',
+        elevation: 2,
+        paddingHorizontal: 12,
+        borderTopWidth: 0.3,
+        borderColor: 'lightgrey',
         paddingVertical: 20,
-        borderRadius:6,
+        borderRadius: 6,
         padding: 4
     },
     inputContainer: {
@@ -383,8 +400,8 @@ const styles = StyleSheet.create({
     crosView: {
         position: 'absolute',
         backgroundColor: 'red',
-        padding:6,
-        borderRadius:20,
+        padding: 6,
+        borderRadius: 20,
         alignSelf: 'flex-end',
         alignItems: 'flex-end'
     },
@@ -425,7 +442,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         height: 50,
         flexDirection: 'row',
-        borderColor: fonts.PRIMARY_COLOR, 
+        borderColor: fonts.PRIMARY_COLOR,
         borderRadius: 16,
     },
     headerRow: {
@@ -454,9 +471,9 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 30
     },
-    codeFieldRoot: { 
-        marginHorizontal: 20, 
-    
+    codeFieldRoot: {
+        marginHorizontal: 20,
+
     },
     cell: {
         width: 40,
